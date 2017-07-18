@@ -29,6 +29,9 @@
     'use strict';
     var Slick = window.Slick || {};
 
+    var $window = $(window);
+    var $document = $(document);
+
     Slick = (function() {
 
         var instanceUid = 0;
@@ -594,7 +597,7 @@
         var _ = this,
             breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
         var sliderWidth = _.$slider.width();
-        var windowWidth = window.innerWidth || $(window).width();
+        var windowWidth = window.innerWidth || $window.width();
 
         if (_.respondTo === 'window') {
             respondToWidth = windowWidth;
@@ -775,7 +778,7 @@
 
         _.$list.off('click.slick', _.clickHandler);
 
-        $(document).off(_.visibilityChange, _.visibility);
+        $document.off(_.visibilityChange, _.visibility);
 
         _.cleanUpSlideEvents();
 
@@ -787,13 +790,13 @@
             $(_.$slideTrack).children().off('click.slick', _.selectHandler);
         }
 
-        $(window).off('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange);
+        $window.off('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange);
 
-        $(window).off('resize.slick.slick-' + _.instanceUid, _.resize);
+        $window.off('resize.slick.slick-' + _.instanceUid, _.resize);
 
         $('[draggable!=true]', _.$slideTrack).off('dragstart', _.preventDefault);
 
-        $(window).off('load.slick.slick-' + _.instanceUid, _.setPosition);
+        $window.off('load.slick.slick-' + _.instanceUid, _.setPosition);
 
     };
 
@@ -1388,7 +1391,7 @@
 
         _.$list.on('click.slick', _.clickHandler);
 
-        $(document).on(_.visibilityChange, $.proxy(_.visibility, _));
+        $document.on(_.visibilityChange, $.proxy(_.visibility, _));
 
         if (_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);
@@ -1398,14 +1401,14 @@
             $(_.$slideTrack).children().on('click.slick', _.selectHandler);
         }
 
-        $(window).on('orientationchange.slick.slick-' + _.instanceUid, $.proxy(_.orientationChange, _));
+        $window.on('orientationchange.slick.slick-' + _.instanceUid, $.proxy(_.orientationChange, _));
 
-        $(window).on('resize.slick.slick-' + _.instanceUid, $.proxy(_.resize, _));
+        $window.on('resize.slick.slick-' + _.instanceUid, $.proxy(_.resize, _));
 
         $('[draggable!=true]', _.$slideTrack).on('dragstart', _.preventDefault);
 
-        $(window).on('load.slick.slick-' + _.instanceUid, _.setPosition);
-        $(document).ready(_.setPosition);
+        $window.on('load.slick.slick-' + _.instanceUid, _.setPosition);
+        $document.ready(_.setPosition);
 
     };
 
@@ -1881,10 +1884,10 @@
 
         var _ = this;
 
-        if ($(window).width() !== _.windowWidth) {
+        if ($window.width() !== _.windowWidth) {
             clearTimeout(_.windowDelay);
             _.windowDelay = window.setTimeout(function() {
-                _.windowWidth = $(window).width();
+                _.windowWidth = $window.width();
                 _.checkResponsive();
                 if( !_.unslicked ) { _.setPosition(); }
             }, 50);
